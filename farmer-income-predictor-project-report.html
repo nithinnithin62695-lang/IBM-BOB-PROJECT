@@ -1,0 +1,456 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Farmer Income Predictor — Project Report</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1f2328;
+    background: #ffffff;
+    padding: 40px 20px 60px;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    border-bottom: 3px solid #1a5c2e;
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a5c2e;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: #57606a;
+  }
+  .badge {
+    display: inline-block;
+    background: #e6f4ea;
+    color: #1a5c2e;
+    border: 1px solid #b7dfbf;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    margin-right: 6px;
+    margin-top: 6px;
+  }
+
+  /* Sections */
+  .section { margin-bottom: 30px; }
+  .section h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a5c2e;
+    border-left: 4px solid #2d8f4e;
+    padding-left: 10px;
+    margin-bottom: 12px;
+  }
+  .section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1f2328;
+    margin: 12px 0 6px;
+  }
+  p { margin-bottom: 8px; color: #1f2328; }
+
+  /* KPI grid */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .kpi {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .kpi .val {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a5c2e;
+    display: block;
+  }
+  .kpi .lbl {
+    font-size: 11px;
+    color: #57606a;
+    margin-top: 2px;
+  }
+
+  /* Two-col layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .card h3 { margin-top: 0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  th {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    padding: 7px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #1f2328;
+  }
+  td {
+    border: 1px solid #e5e7eb;
+    padding: 6px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafbfc; }
+
+  /* Feature list */
+  .feature-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    font-size: 12.5px;
+    margin: 6px 0;
+  }
+  .feature-list li {
+    list-style: none;
+    padding: 3px 0;
+    border-bottom: 1px dotted #e5e7eb;
+    color: #1f2328;
+  }
+  .feature-list li::before { content: "• "; color: #2d8f4e; font-weight: 700; }
+
+  /* Pipeline flow */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 10px 0;
+  }
+  .pipe-step {
+    background: #e6f4ea;
+    border: 1px solid #b7dfbf;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a5c2e;
+    white-space: nowrap;
+  }
+  .pipe-arrow {
+    font-size: 16px;
+    color: #57606a;
+    padding: 0 6px;
+  }
+
+  /* Pages */
+  .page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .page-card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .page-card .page-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #1a5c2e;
+  }
+  .page-card p { font-size: 12px; color: #57606a; margin: 0; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 40px;
+    padding-top: 14px;
+    text-align: center;
+    font-size: 11px;
+    color: #57606a;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="header">
+    <h1>🌾 Farmer Income Predictor — Project Report</h1>
+    <div class="subtitle">A full-stack ML application predicting annual income of Indian farmers using demographic, agricultural, geographic, and socio-economic features.</div>
+    <div style="margin-top:10px">
+      <span class="badge">Python</span>
+      <span class="badge">Streamlit</span>
+      <span class="badge">scikit-learn</span>
+      <span class="badge">Gradient Boosting</span>
+      <span class="badge">Plotly</span>
+      <span class="badge">IBM Dataset</span>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>1. Dataset Overview</h2>
+    <div class="kpi-grid">
+      <div class="kpi"><span class="val">47,970</span><span class="lbl">Training Farmers</span></div>
+      <div class="kpi"><span class="val">20+</span><span class="lbl">Indian States</span></div>
+      <div class="kpi"><span class="val">44</span><span class="lbl">Total Features</span></div>
+      <div class="kpi"><span class="val">3 Files</span><span class="lbl">Train / Test / Dict</span></div>
+    </div>
+    <table>
+      <thead><tr><th>File</th><th>Contents</th><th>Location</th></tr></thead>
+      <tbody>
+        <tr><td><code>lte_train.csv</code></td><td>Training data — 47,970 rows of farmer records</td><td><code>farmer-income-data.zip/</code></td></tr>
+        <tr><td><code>lte_test.csv</code></td><td>Hold-out test set for evaluation</td><td><code>farmer-income-data.zip/</code></td></tr>
+        <tr><td><code>lte_dictionary.csv</code></td><td>Column descriptions and metadata</td><td><code>farmer-income-data.zip/</code></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#57606a">Source: IBM Farmer Income Dataset. Target variable: <strong>Target_Variable/Total Income</strong> (annual income in ₹).</p>
+  </div>
+
+  
+  <div class="section">
+    <h2>2. Project Structure</h2>
+    <div class="card" style="font-family:monospace;font-size:12px;line-height:1.9">
+      farmer-income-data.zip/<br />
+      ├── lte_train.csv             <span style="color:#57606a"># Training data</span><br />
+      ├── lte_test.csv              <span style="color:#57606a"># Test data</span><br />
+      ├── lte_dictionary.csv      <span style="color:#57606a"># Column descriptions</span><br />
+      └── farmer_income_predictor/<br />
+          ├── app.py                <span style="color:#57606a"># Entry point</span><br />
+          ├── requirements.txt<br />
+          ├── backend/<br />
+          │   ├── train_model.py  <span style="color:#57606a"># ML training pipeline</span><br />
+          │   └── predictor.py    <span style="color:#57606a"># Prediction helper</span><br />
+          ├── models/              <span style="color:#57606a"># Saved model artefacts</span><br />
+          │   ├── income_model.joblib<br />
+          │   └── model_meta.joblib<br />
+          └── pages/<br />
+              ├── home.py           <span style="color:#57606a"># Home &amp; overview</span><br />
+              ├── explorer.py       <span style="color:#57606a"># Data explorer</span><br />
+              ├── predict.py        <span style="color:#57606a"># Predict income</span><br />
+              └── insights.py       <span style="color:#57606a"># Model insights</span>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>3. Machine Learning Model</h2>
+
+    <h3>Model Architecture</h3>
+    <table>
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Algorithm</td><td>Gradient Boosting Regressor (scikit-learn)</td></tr>
+        <tr><td>Number of Trees</td><td>300 estimators</td></tr>
+        <tr><td>Learning Rate</td><td>0.08</td></tr>
+        <tr><td>Max Tree Depth</td><td>5</td></tr>
+        <tr><td>Subsample Ratio</td><td>80%</td></tr>
+        <tr><td>Min Samples per Leaf</td><td>10</td></tr>
+        <tr><td>Target Transformation</td><td>log1p (reduces income skewness)</td></tr>
+        <tr><td>Prediction Inverse</td><td>np.expm1()</td></tr>
+        <tr><td>Train / Test Split</td><td>80% / 20% (random_state=42)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Preprocessing Pipeline</h3>
+    <div class="pipeline">
+      <div class="pipe-step">Raw CSV</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">ColumnTransformer</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">Median Imputer<br /><span style="font-weight:400;font-size:11px">(numeric)</span></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">StandardScaler</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">OrdinalEncoder<br /><span style="font-weight:400;font-size:11px">(categorical)</span></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">GBR Model</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">expm1()</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">₹ Prediction</div>
+    </div>
+    <p style="font-size:12px;color:#57606a">Categorical features use Mode imputation before OrdinalEncoder. Unknown categories at inference time are mapped to −1.</p>
+
+    <h3>Model Persistence</h3>
+    <p>Two joblib files are saved after training: <code>income_model.joblib</code> (the full sklearn Pipeline) and <code>model_meta.joblib</code> (feature names, performance metrics, and feature importance). The <code>predictor.py</code> module auto-triggers training if models are missing.</p>
+  </div>
+
+  
+  <div class="section">
+    <h2>4. Feature Engineering</h2>
+    <div class="two-col">
+      <div class="card">
+        <h3>34 Numeric Features</h3>
+        <ul class="feature-list">
+          <li>Non-Agriculture Income</li>
+          <li>Total Land for Agriculture</li>
+          <li>Active Loans (Bureau)</li>
+          <li>Avg Disbursement Amount</li>
+          <li>Proximity to Mandi (Km)</li>
+          <li>Proximity to Railway (Km)</li>
+          <li>Village Socio-Econ Score</li>
+          <li>K022 Seasonal Rainfall (mm)</li>
+          <li>R022 Seasonal Rainfall (mm)</li>
+          <li>K021 Seasonal Rainfall (mm)</li>
+          <li>R021 Seasonal Rainfall (mm)</li>
+          <li>R020 Seasonal Rainfall (mm)</li>
+          <li>Houses with 6+ rooms (%)</li>
+          <li>Electricity access (%)</li>
+          <li>Pucca House &gt;3 rooms (%)</li>
+          <li>Metal/GI roof (%)</li>
+          <li>Burnt brick wall (%)</li>
+          <li>Improved Sanitation (%)</li>
+          <li>No KCC Credit (%)</li>
+          <li>Total Geographical Area (Ha)</li>
+          <li>Net Agri Area (Ha)</li>
+          <li>Net Agri Area (% geo area)</li>
+          <li>Kharif Irrigated Area 2022</li>
+          <li>Kharif Cropping Density 2022</li>
+          <li>Kharif Agricultural Score 2022</li>
+          <li>Kharif GW Thickness (cm)</li>
+          <li>Kharif GW Replenishment (cm)</li>
+          <li>Rabi Irrigated Area 2022</li>
+          <li>Rabi Cropping Density 2022</li>
+          <li>Rabi Agricultural Score 2022</li>
+          <li>Night Light Index</li>
+          <li>Village Socio-Econ Score (v2)</li>
+          <li>Land Holding Index</li>
+          <li>Road Density (Km/SqKm)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>10 Categorical Features</h3>
+        <ul class="feature-list" style="grid-template-columns:1fr">
+          <li>State (21 Indian states)</li>
+          <li>Region (North/South/East/West/Central)</li>
+          <li>Sex (M / F)</li>
+          <li>Marital Status (M/S/W/D)</li>
+          <li>Village Agri Category K022 (Good/Average/Poor)</li>
+          <li>Village Socio-Econ Category K022</li>
+          <li>Village Agri Category R022</li>
+          <li>Kharif Agricultural Performance 2022</li>
+          <li>Rabi Agricultural Performance 2022</li>
+          <li>Village Socio-Econ Category (overall)</li>
+        </ul>
+        <br />
+        <h3>Target Variable</h3>
+        <ul class="feature-list" style="grid-template-columns:1fr">
+          <li>Target_Variable/Total Income (₹ annual)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>5. Application Pages</h2>
+    <div class="page-grid">
+      <div class="page-card">
+        <div class="page-title">🏠 Home &amp; Overview</div>
+        <p>KPI cards (total farmers, states, avg income, median income). Income distribution histogram. Top 10 states by farmer count. Median income by region bar chart.</p>
+      </div>
+      <div class="page-card">
+        <div class="page-title">📊 Data Explorer</div>
+        <p>Interactive filtering by state and region. Scatter plots, box plots, and correlation heatmap for exploratory analysis of the raw dataset.</p>
+      </div>
+      <div class="page-card">
+        <div class="page-title">🔮 Predict Income</div>
+        <p>46-input interactive form covering farmer profile, agricultural details, weather/geography, village infrastructure, and seasonal indicators. Returns predicted annual income with monthly and daily breakdowns and income bracket classification.</p>
+      </div>
+      <div class="page-card">
+        <div class="page-title">🧠 Model Insights</div>
+        <p>Live model performance metrics (R², MAE, RMSE, MAPE). Model architecture summary. Top-20 feature importance chart. Full feature importance table. R² gauge visualization.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>6. Technology Stack</h2>
+    <table>
+      <thead><tr><th>Layer</th><th>Library / Tool</th><th>Version</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>UI / Frontend</td><td>Streamlit</td><td>≥ 1.32.0</td><td>Multi-page web app, sidebar nav, forms</td></tr>
+        <tr><td>Visualisation</td><td>Plotly</td><td>≥ 5.18.0</td><td>Interactive charts, gauge, heatmap</td></tr>
+        <tr><td>ML / Model</td><td>scikit-learn</td><td>≥ 1.3.0</td><td>Pipeline, GBR, preprocessing, metrics</td></tr>
+        <tr><td>Data</td><td>pandas</td><td>≥ 2.0.0</td><td>CSV loading, DataFrame manipulation</td></tr>
+        <tr><td>Numerics</td><td>NumPy</td><td>≥ 1.24.0</td><td>log1p/expm1, array ops</td></tr>
+        <tr><td>Persistence</td><td>joblib</td><td>≥ 1.3.0</td><td>Serialising pipeline and metadata</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="section">
+    <h2>7. How to Run</h2>
+    <div class="card" style="font-family:monospace;font-size:12.5px;line-height:2.0">
+      <span style="color:#57606a"># 1. Install dependencies</span><br />
+      pip install -r requirements.txt<br /><br />
+      <span style="color:#57606a"># 2. Launch the app</span><br />
+      cd farmer_income_predictor<br />
+      streamlit run app.py<br /><br />
+      <span style="color:#57606a"># 3. Train model (first time only — ~2 min)</span><br />
+      → Navigate to 🔮 Predict Income → click "🚀 Train Model Now"<br />
+      → Model saved to models/ and reused on all future runs
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>8. Key Design Decisions</h2>
+    <table>
+      <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>log1p target transform</td><td>Income distribution is right-skewed; log scale normalises the target, improving GBR training stability and RMSE.</td></tr>
+        <tr><td>Gradient Boosting over Random Forest</td><td>GBR achieves lower bias on tabular socio-economic data through sequential residual correction.</td></tr>
+        <tr><td>OrdinalEncoder for categoricals</td><td>Preserves ordinality of Good/Average/Poor categories; handles unknown values at inference via <code>unknown_value=-1</code>.</td></tr>
+        <tr><td>Median imputation</td><td>Robust to outliers in skewed agricultural numeric features.</td></tr>
+        <tr><td>@st.cache_data on data loads</td><td>Prevents re-reading 47,970-row CSV on every Streamlit interaction.</td></tr>
+        <tr><td>joblib persistence</td><td>Entire sklearn Pipeline (preprocessor + model) serialised as one object; eliminates feature-order bugs at inference.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="section">
+    <h2>9. Summary</h2>
+    <p>The <strong>Farmer Income Predictor</strong> is a production-ready Streamlit application that brings together a well-structured ML backend and a user-friendly multi-page frontend. It processes 44 features spanning agricultural productivity, socio-economic indicators, weather patterns, and geographic context to produce an accurate estimate of annual farmer income. The trained Gradient Boosting pipeline is persisted with joblib and loaded instantly on subsequent runs, making the app suitable for real-time inference without re-training. The model architecture, performance metrics, and feature importance are fully exposed through the Model Insights page, ensuring transparency and interpretability.</p>
+  </div>
+
+  <div class="footer">
+    Made with IBM Bob
+  </div>
+
+</div>
+</body>
+</html>
